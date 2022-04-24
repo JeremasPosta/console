@@ -19,14 +19,18 @@ class Document
   def save
     @metadata = "Size: #{content.size} characters, Created at: #{Time.now}."
     document =  {
-      filename: filename,
       content: content,
       metadata: metadata
     }
-    @@disk.insert_in(document, *@@disk.current_route)
+    @@disk.create_folder(filename, **document)
   end
 
   def self.location
     @@disk
+  end
+
+  def self.format_disk
+    @@disk = nil
+    @@disk ||= VirtualDisk.new
   end
 end

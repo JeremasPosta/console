@@ -15,17 +15,19 @@ class VirtualDisk
     @current_route << @disk.keys.first
   end
 
-  def create_folder(name)
+  def create_folder(name, **opts)
     return ERRORS[:bad_folder_name] if folder_name_valid? name
 
-    add_folder_to current_route, name
-    insert_in({}, *current_route)
+    add_folder_to(current_route, name)
+    insert_in(opts, *current_route)
   end
 
   def insert_in(content = {}, *folders)
-    folders[0..-2]
+    folders[0...-1]
       .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
       .public_send(:[]=, folders.last, content)
+
+    current_route.pop unless content.empty?
   end
 
   def add_folder_to(current, name)
@@ -34,7 +36,7 @@ class VirtualDisk
 
   def cd(folder)
     if folder == GO_TO_UPPER_FOLDER
-      current_route.pop
+      current_route.pop if current_route.size > 1
     elsif folder_exist_in_this_level? folder
       add_folder_to current_route, folder
     else
@@ -57,8 +59,12 @@ class VirtualDisk
   end
 
   def gimme_a_file(name)
+    # byebug
     temp_current_route = current_route.dup
+    add_folder_to temp_current_route, name
     add_folder_to temp_current_route, 'content'
+    # pp disk
+    # pp temp_current_route
     disk.dig(*temp_current_route)
   end
 end

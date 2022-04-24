@@ -65,12 +65,5 @@ class VirtualDiskTest < VirtualDisk
         expect(subject.whereami).to eq '~/folderName'
       end
     end
-
-    context 'querying' do
-      it 'must return document content' do
-        Document.new 'nombre', 'contenido'
-        expect(Document.location.gimme_a_file('nombre')).to eq 'contenido'
-      end
-    end
   end
 end

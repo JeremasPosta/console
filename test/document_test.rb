@@ -24,7 +24,7 @@ class DocumentTest < Document
       it 'must save text on disk' do
         subject.content = 'Bazinga editado'
         subject.save
-        expect(Document.location.disk[:drive][:content]).to eq 'Bazinga editado'
+        expect(Document.location.disk[:drive][:someFile][:content]).to eq 'Bazinga editado'
       end
     end
 
@@ -36,6 +36,29 @@ class DocumentTest < Document
       it 'must have some info' do
         metadata = "Size: 8 characters, Created at: #{Time.now}."
         expect(subject.metadata).to eq metadata
+      end
+    end
+
+    context 'querying' do
+      it 'must return document content' do
+        expect(subject.class.location.gimme_a_file('someFile')).to eq 'Bazinga!'
+      end
+
+      it 'must be available each document from a folder' do
+        subject.class.new 'nombre2', 'contenido2'
+        subject.class.new 'nombre3', 'contenido3'
+        expect(subject.class.location.gimme_a_file('nombre2')).to eq 'contenido2'
+        expect(subject.class.location.gimme_a_file('nombre3')).to eq 'contenido3'
+      end
+      
+      it 'must be possible to fetch files from different folders' do
+        subject.class.location.create_folder('carpeta2')
+        subject.class.new 'nombre2', 'contenido2'
+        subject.class.new 'nombre3', 'contenido3'
+        expect(subject.class.location.gimme_a_file('nombre2')).to eq 'contenido2'
+        expect(subject.class.location.gimme_a_file('nombre3')).to eq 'contenido3'
+        subject.class.location.cd '..'
+        expect(subject.class.location.gimme_a_file('someFile')).to eq 'Bazinga!'
       end
     end
   end
