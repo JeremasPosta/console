@@ -55,4 +55,10 @@ class VirtualDisk
   def folder_name_valid?(name)
     name.match %r{(/+|\.+|\\+)}
   end
+
+  def gimme_a_file(name)
+    temp_current_route = current_route.dup
+    add_folder_to temp_current_route, 'content'
+    disk.dig(*temp_current_route)
+  end
 end

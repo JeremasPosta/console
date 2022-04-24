@@ -24,7 +24,7 @@ class DocumentTest < Document
       it 'must save text on disk' do
         subject.content = 'Bazinga editado'
         subject.save
-        expect(subject.location.disk[:drive][:content]).to eq 'Bazinga editado'
+        expect(Document.location.disk[:drive][:content]).to eq 'Bazinga editado'
       end
     end
 

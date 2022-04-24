@@ -1,3 +1,4 @@
 require 'rspec/autorun'
-require './console'
+require './lib/document'
+require './lib/virtualdisk'
 Dir['test/*.rb'].each { |file| load file }

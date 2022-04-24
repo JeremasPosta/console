@@ -7,8 +7,8 @@ class Document
   @@disk ||= VirtualDisk.new
 
   def initialize(filename, content = '')
-    @content = content
-    @filename = filename
+    @content = content.to_s
+    @filename = filename.to_s
     save
   end
 
@@ -26,7 +26,7 @@ class Document
     @@disk.insert_in(document, *@@disk.current_route)
   end
 
-  def location
+  def self.location
     @@disk
   end
 end
