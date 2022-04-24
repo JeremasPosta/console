@@ -5,6 +5,7 @@ class Document
   attr_reader :filename
 
   @@disk ||= VirtualDisk.new
+  @@files_index ||= []
 
   def initialize(filename, content = '')
     @content = content.to_s
@@ -23,17 +24,13 @@ class Document
       metadata: metadata
     }
     @@disk.create_folder(filename, **document)
+    @@files_index.push([{"#{filename}": parent_folder}])
   end
 
   def self.location
     @@disk
   end
-
-  def self.format_disk
-    @@disk = nil
-    @@disk ||= VirtualDisk.new
-  end
-
+  
   def self.destroy(filename)
     @@disk.destroy(filename)
   end

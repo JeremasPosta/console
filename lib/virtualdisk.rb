@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 class VirtualDisk
   attr_accessor :disk, :current_route
 
@@ -20,6 +21,12 @@ class VirtualDisk
 
     add_folder_to(current_route, name)
     insert_in(opts, *current_route)
+    "Created /" + name
+  end
+
+  def listing
+    folders = current_route.dup
+    disk.dig(*folders).keys.to_s
   end
 
   def insert_in(content = {}, *folders)
@@ -74,6 +81,6 @@ class VirtualDisk
 
   def destroy(filename)
     remove_from(filename.to_sym)
-    "#{filename} deleted."
+    "#{filename} file deleted."
   end
 end

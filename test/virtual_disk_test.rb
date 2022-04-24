@@ -65,5 +65,26 @@ class VirtualDiskTest < VirtualDisk
         expect(subject.whereami).to eq '~/folderName'
       end
     end
+
+    context 'helpers' do
+      it 'must present a list' do
+        subject.create_folder('folderName')
+        subject.create_folder('extraFolderName')
+        expect(subject.listing).to eq '[]'
+        subject.cd '..'
+        expect(subject.listing).to eq '[:extraFolderName]'
+      end
+    end
+
+    context 'on destroy' do
+      it 'must delete folder' do
+        skip
+        expect do
+          subject.create_folder 'Borrame'
+          expect(subject.whereami).to eq '~/Borrame'
+          subject.destroy('Borrame')
+        end.to_not change { subject.disk }
+      end
+    end
   end
 end
