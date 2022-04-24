@@ -19,10 +19,13 @@ class VirtualDisk
     return ERRORS[:bad_folder_name] if folder_name_valid? name
 
     add_folder_to current_route, name
-    folders = *current_route
+    insert_in({}, *current_route)
+  end
+
+  def insert_in(content = {}, *folders)
     folders[0..-2]
       .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
-      .public_send(:[]=, folders.last, {})
+      .public_send(:[]=, folders.last, content)
   end
 
   def add_folder_to(current, name)
@@ -39,7 +42,7 @@ class VirtualDisk
     end
   end
 
-  def folder_exist_in_this_level? folder
+  def folder_exist_in_this_level?(folder)
     temp_current_route = current_route.dup
     add_folder_to temp_current_route, folder
     disk.dig(*temp_current_route)
@@ -49,7 +52,7 @@ class VirtualDisk
     current_route.map(&:to_s).inject { |route, folder| "#{route}/#{folder}" }
   end
 
-  def folder_name_valid? name
+  def folder_name_valid?(name)
     name.match %r{(/+|\.+|\\+)}
   end
 end
