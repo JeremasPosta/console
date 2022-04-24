@@ -50,15 +50,30 @@ class DocumentTest < Document
         expect(subject.class.location.gimme_a_file('nombre2')).to eq 'contenido2'
         expect(subject.class.location.gimme_a_file('nombre3')).to eq 'contenido3'
       end
-      
+
       it 'must be possible to fetch files from different folders' do
         subject.class.location.create_folder('carpeta2')
-        subject.class.new 'nombre2', 'contenido2'
         subject.class.new 'nombre3', 'contenido3'
-        expect(subject.class.location.gimme_a_file('nombre2')).to eq 'contenido2'
         expect(subject.class.location.gimme_a_file('nombre3')).to eq 'contenido3'
+        expect(subject.class.location.gimme_a_file('someFile')).to eq nil
         subject.class.location.cd '..'
         expect(subject.class.location.gimme_a_file('someFile')).to eq 'Bazinga!'
+      end
+
+      it 'must be able to read metadata from filename' do
+        metadata = "Size: 8 characters, Created at: #{Time.now}."
+        expect(subject.class.location.gimme_a_file('someFile', 'metadata')).to eq metadata
+      end
+    end
+
+    context 'on destroy' do
+      it 'must delete document' do
+        expect do
+          subject.class.new 'Borrame!', 'contenido'
+          expect(subject.class.location.gimme_a_file('Borrame!')).to eq 'contenido'
+          subject.class.destroy('Borrame!')
+        end.to_not change { Document.location }
+        expect(subject.class.location.gimme_a_file('Borrame!')).to be nil
       end
     end
   end

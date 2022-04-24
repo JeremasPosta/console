@@ -27,7 +27,12 @@ class VirtualDisk
       .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
       .public_send(:[]=, folders.last, content)
 
-    current_route.pop unless content.empty?
+    current_route.pop unless content&.empty?
+  end
+
+  def remove_from(key)
+    insert_in nil, current_route
+    disk.compact!
   end
 
   def add_folder_to(current, name)
@@ -35,6 +40,7 @@ class VirtualDisk
   end
 
   def cd(folder)
+    folder.to_s
     if folder == GO_TO_UPPER_FOLDER
       current_route.pop if current_route.size > 1
     elsif folder_exist_in_this_level? folder
@@ -58,13 +64,16 @@ class VirtualDisk
     name.match %r{(/+|\.+|\\+)}
   end
 
-  def gimme_a_file(name)
-    # byebug
+  def gimme_a_file(name, property = nil)
     temp_current_route = current_route.dup
     add_folder_to temp_current_route, name
-    add_folder_to temp_current_route, 'content'
-    # pp disk
-    # pp temp_current_route
+    required_param = property.nil? ? 'content' : property
+    add_folder_to temp_current_route, required_param
     disk.dig(*temp_current_route)
+  end
+
+  def destroy(filename)
+    remove_from(filename.to_sym)
+    "#{filename} deleted."
   end
 end

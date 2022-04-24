@@ -33,4 +33,8 @@ class Document
     @@disk = nil
     @@disk ||= VirtualDisk.new
   end
+
+  def self.destroy(filename)
+    @@disk.destroy(filename)
+  end
 end
