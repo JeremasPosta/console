@@ -1,6 +1,6 @@
 class VirtualDiskTest < VirtualDisk
   describe VirtualDisk do
-    subject { VirtualDisk.new() }
+    subject { VirtualDisk.new(:~) }
 
     context 'on creation' do
       it 'must be true' do
@@ -22,6 +22,15 @@ class VirtualDiskTest < VirtualDisk
         subject.create_folder('folderName')
         subject.create_folder('nestedName')
         expect(subject.disk).to eq({ '~': { 'folderName': { 'nestedName': {} } } })
+      end
+
+      it 'cant add a dot in folder name' do
+        expect(subject.create_folder('.')).to eq VirtualDisk::ERRORS[:bad_folder_name]
+      end
+
+      it 'cant add a slash in folder name' do
+        expect(subject.create_folder('/')).to eq VirtualDisk::ERRORS[:bad_folder_name]
+        expect(subject.create_folder('\\')).to eq VirtualDisk::ERRORS[:bad_folder_name]
       end
     end
 
@@ -52,7 +61,7 @@ class VirtualDiskTest < VirtualDisk
         subject.create_folder('folderName')
         subject.create_folder('extraFolderName')
         subject.cd('..')
-        expect(subject.cd('imInevitable')).to eq 'Unexisting folder'
+        expect(subject.cd('imInevitable')).to eq VirtualDisk::ERRORS[:unexisting_folder]
         expect(subject.whereami).to eq '~/folderName'
       end
     end

@@ -3,33 +3,26 @@ class VirtualDisk
   attr_accessor :disk, :current_route
 
   ERRORS = {
-    unexisting_folder: 'Unexisting folder'
+    unexisting_folder: 'Unexisting folder.',
+    bad_folder_name: 'Folder name cannot contain dots(.) or slashes(/\\).'
   }
 
-  def initialize(disk = :'~', current_route = [])
+  GO_TO_UPPER_FOLDER = '..'
+
+  def initialize(disk = :drive, current_route = [])
     @disk = { disk => {} }
     @current_route = current_route
     @current_route << @disk.keys.first
   end
 
-  def [](key)
-    disk[key]
-  end
-
-  def []=(key, values)
-    disk[key] += [values].flatten
-    disk[key]
-  end
-
   def create_folder(name)
-    add_folder_to current_route, name
-    deep_set(disk, {}, *current_route)
-  end
+    return ERRORS[:bad_folder_name] if folder_name_valid? name
 
-  def deep_set(hash, value, *keys)
-    keys[0...-1].inject(hash) do |acc, h|
-      acc.public_send(:[], h)
-    end.public_send(:[]=, keys.last, value)
+    add_folder_to current_route, name
+    folders = *current_route
+    folders[0..-2]
+      .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
+      .public_send(:[]=, folders.last, {})
   end
 
   def add_folder_to(current, name)
@@ -37,7 +30,7 @@ class VirtualDisk
   end
 
   def cd(folder)
-    if folder == '..'
+    if folder == GO_TO_UPPER_FOLDER
       current_route.pop
     elsif folder_exist_in_this_level? folder
       add_folder_to current_route, folder
@@ -53,6 +46,10 @@ class VirtualDisk
   end
 
   def whereami
-    current_route.map(&:to_s).inject { |route, n| route + '/' + n }
+    current_route.map(&:to_s).inject { |route, folder| "#{route}/#{folder}" }
+  end
+
+  def folder_name_valid? name
+    name.match %r{(/+|\.+|\\+)}
   end
 end
