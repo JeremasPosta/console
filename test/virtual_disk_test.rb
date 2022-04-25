@@ -70,9 +70,9 @@ class VirtualDiskTest < VirtualDisk
       it 'must present a list' do
         subject.create_folder('folderName')
         subject.create_folder('extraFolderName')
-        expect(subject.listing).to eq '[]'
+        expect(subject.listing).to eq ''
         subject.cd '..'
-        expect(subject.listing).to eq '[:extraFolderName]'
+        expect(subject.listing).to eq "\"extraFolderName\""
       end
     end
 

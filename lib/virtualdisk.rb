@@ -24,12 +24,18 @@ class VirtualDisk
     @current_route << @disk.keys.first
   end
 
-  def create_folder(name = "folder#{rand 100}", **opts)
+  def create_folder(name, **opts)
+    name ||= random_folder
     return ERRORS[:bad_folder_name] if folder_name_valid? name
 
     add_folder_to(current_route, name)
     insert_in(opts, *current_route)
     MESSAGES[:folder_created] + name
+  end
+
+  def random_folder
+    puts '> A random name was chosen for you:'
+    "folder#{rand 10000}"
   end
 
   def listing
