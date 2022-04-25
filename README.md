@@ -7,9 +7,11 @@ Console is a filesystem simulation. It has the posibility to manage folders and 
 The project cannot use external API, Gems or libraries.
 
 ## Requirements
-This was written on `Ruby 3.0.2`. Tested on Windows.
+This was written on `Ruby 3.0.2`.
 
 Works fine with `2.4.10`, `2.7.*`.
+
+Tested on Ubuntu and Windows.
 
 ## Initialization
 We can start our Console typing:
