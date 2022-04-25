@@ -3,10 +3,14 @@ A challenge for Shipnow 🚚 📦.
 
 Console is a filesystem simulation. It has the posibility to manage folders and simple text-based files.
 
-## Restrictions
+## Project brochure
+
+Create a console programa that be able to create virtual files and folders, read and write files content, navigate trough folders and delete it. Optionally, can implement a persistence trough a Hard-File and User management.
+
+### Restrictions
 The project cannot use external API, Gems or libraries.
 
-## Requirements
+## Versions requirements
 This was written on `Ruby 3.0.2`.
 
 Works fine with `2.4.10`, `2.7.*`.
