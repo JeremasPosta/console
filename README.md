@@ -5,7 +5,7 @@ Console is a filesystem simulation. It has the posibility to manage folders and 
 
 ## Project brochure
 
-Create a console programa that be able to create virtual files and folders, read and write files content, navigate trough folders and delete it. Optionally, can implement a persistence trough a Hard-File and User management.
+Create a console program that be able to create virtual files and folders, read and write files content, navigate trough folders and delete it. Optionally, can implement a persistence trough a Hard-File and User management.
 
 ### Restrictions
 The project cannot use external API, Gems or libraries.
