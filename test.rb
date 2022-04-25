@@ -1,4 +1,3 @@
-require 'byebug'
 require 'rspec/autorun'
 require './lib/document'
 require './lib/virtualdisk'
