@@ -1,4 +1,4 @@
-class DocumentTest < Document
+class DocumentTest
   describe Document do
     subject { Document.new('someFile', 'Bazinga!') }
 

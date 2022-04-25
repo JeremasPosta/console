@@ -11,7 +11,7 @@ class VirtualDisk
 
   MESSAGES = {
     folder_created: '> Created /',
-    file_deleted:   '> file deleted.'
+    file_deleted:   '> file deleted.',
     random_folder:  '> A random name was chosen for you:'
   }
 
@@ -105,16 +105,16 @@ class VirtualDisk
     puts "Failed to dump disk with error: #{e}"
   end
 
-  def mount(filename)
+  def mount(filename, *args)
     disk.merge!(JSON.parse(File.read(filename.to_s), symbolize_names: true).to_h)
   rescue Errno::ENOENT => e
-    puts "> Failed to mount disk with error: #{e}"
-    puts '> Trying to create resource...'
+    puts "> Failed to mount disk with error: #{e}" if args.empty?
+    puts '> Trying to create resource...' if args.empty?
     begin
       File.write(filename.to_s, disk.to_json)
-      puts '> Success!'
+      puts '> Success!' if args.empty?
     rescue Errno::ENOENT => e
-      puts "> Failed to create disk: #{e}"
+      puts "> Failed to create disk: #{e}" if args.empty?
     end
   end
 end

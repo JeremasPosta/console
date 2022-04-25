@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require './lib/virtualdisk'
+
 class Document
   attr_accessor :content, :metadata
   attr_reader :filename
@@ -33,9 +34,5 @@ class Document
 
   def self.destroy(filename)
     @@disk.destroy(filename)
-  end
-
-  def self.greet
-    puts '> Welcome, if you are using --persisted option, quit with command quit or exit to save.'
   end
 end

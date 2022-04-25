@@ -1,4 +1,4 @@
-class VirtualDiskTest < VirtualDisk
+class VirtualDiskTest
   describe VirtualDisk do
     subject { VirtualDisk.new(:~) }
 
@@ -78,7 +78,7 @@ class VirtualDiskTest < VirtualDisk
 
     context 'on destroy' do
       it 'must delete folder' do
-        skip
+        skip 'Skipped, reason: Need implementation'
         expect do
           subject.create_folder 'Borrame'
           expect(subject.whereami).to eq '~/Borrame'
