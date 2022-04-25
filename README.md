@@ -38,7 +38,7 @@ Here, you can redefine your password indeed. (Not too secure, uh?) I need to fix
 ```
 Once logged, a prompt appear:
 ```
-> Welcome Jere, if you are using --persisted option, quit with command 'quit' or 'exit' to save your changes.
+> Welcome Jeremias, if you are using --persisted option, quit with command 'quit' or 'exit' to save your changes.
 jeremias@drive/>
 ```
 Now you can work with the other commands.
