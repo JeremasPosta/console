@@ -1,14 +1,22 @@
 # frozen_string_literal: true
 require 'json'
+
 class VirtualDisk
   attr_accessor :disk, :current_route
 
   ERRORS = {
-    unexisting_folder: 'Unexisting folder.',
-    bad_folder_name: 'Folder name cannot contain dots(.) or slashes(/\\).'
+    unexisting_folder: '> Unexisting folder.',
+    bad_folder_name:   '> Folder name cannot contain dots(.) or slashes(/\\).'
+  }
+
+  MESSAGES = {
+    folder_created: '> Created /',
+    file_deleted:   '> file deleted.'
   }
 
   GO_TO_UPPER_FOLDER = '..'
+  CONTENT = 'content'
+  DOTS_SLASH_FILTER = %r{(/+|\.+|\\+)}
 
   def initialize(disk = :drive, current_route = [])
     @disk = { disk => {} }
@@ -16,17 +24,17 @@ class VirtualDisk
     @current_route << @disk.keys.first
   end
 
-  def create_folder(name, **opts)
+  def create_folder(name = "folder#{rand 100}", **opts)
     return ERRORS[:bad_folder_name] if folder_name_valid? name
 
     add_folder_to(current_route, name)
     insert_in(opts, *current_route)
-    "Created /" + name
+    MESSAGES[:folder_created] + name
   end
 
   def listing
     folders = current_route.dup
-    disk.dig(*folders).keys.to_s
+    disk.dig(*folders).keys.map(&:to_s).to_s[1...-1]
   end
 
   def insert_in(content = {}, *folders)
@@ -68,19 +76,38 @@ class VirtualDisk
   end
 
   def folder_name_valid?(name)
-    name.match %r{(/+|\.+|\\+)}
+    name.match DOTS_SLASH_FILTER
   end
 
   def gimme_a_file(name, property = nil)
     temp_current_route = current_route.dup
     add_folder_to temp_current_route, name
-    required_param = property.nil? ? 'content' : property
+    required_param = property.nil? ? CONTENT : property
     add_folder_to temp_current_route, required_param
     disk.dig(*temp_current_route)
   end
 
   def destroy(filename)
     remove_from(filename.to_sym)
-    "#{filename} file deleted."
+    filename + MESSAGES[:file_deleted]
+  end
+
+  def dump(filename)
+    File.write(filename.to_s, disk.to_json)
+  rescue Errno::ENOENT => e
+    puts "Failed to dump disk with error: #{e}"
+  end
+
+  def mount(filename)
+    disk.merge!(JSON.parse(File.read(filename.to_s), symbolize_names: true).to_h)
+  rescue Errno::ENOENT => e
+    puts "> Failed to mount disk with error: #{e}"
+    puts '> Trying to create resource...'
+    begin
+      File.write(filename.to_s, disk.to_json)
+      puts '> Success!'
+    rescue Errno::ENOENT => e
+      puts "> Failed to create disk: #{e}"
+    end
   end
 end

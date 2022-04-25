@@ -3,11 +3,15 @@ require './lib/document'
 require 'byebug'
 
 params = {}
-
 OptionParser.new do |parser|
-  parser.on("-e=s", "--email", "Your email address")
-  parser.on("-u=s", "--user", "Your username")
+  parser.on("-u = 'example'", "--user", "Your username")
+  parser.on("-k = 'example_pwd'", "--password", "Your password")
+  parser.on("-p = 'file'", "--persisted", "Your virtual disk filename, without extension")
 end.parse!(into: params)
+
+Document.greet
+
+params[:persisted] && Document.location.mount(params[:persisted])
 
 loop do
   print "#{params[:user]}@#{Document.location.whereami}/> "
@@ -16,6 +20,10 @@ loop do
 
   case command
   when 'exit', 'quit'
+    if params[:persisted]
+      Document.location.dump params[:persisted]
+    end
+    puts 'Bye!'
     exit
 
   when 'create_file', 'touch'
@@ -45,21 +53,37 @@ loop do
   when 'ls'
     puts Document.location.listing
 
+  when 'mount'
+    Document.location.mount input.first
+
+  when 'dump'
+    Document.location.dump input.first
+
+  when 'ruby'
+    eval input.join(' ')
+
   when 'seed'
     Document.new('archivo1', 'contenido1')
     Document.new('archivo2', 'contenido2')
     Document.location.create_folder 'carpeta1'
     Document.location.create_folder 'carpeta2'
-    Document.location.create_folder 'carpeta2'
+    Document.location.create_folder 'carpeta3'
     Document.new('archivo3', 'contenido3')
     Document.new('archivo4', 'contenido4')
-    Document.location.create_folder 'carpeta2'
+    Document.location.create_folder 'carpeta4'
+    Document.new('archivo7', 'contenido7')
     Document.location.cd '..'
     Document.location.cd '..'
     Document.new('archivo5', 'contenido5')
     Document.new('archivo6', 'contenido6')
     Document.location.cd '..'
     Document.location.cd '..'
+
+  when 'whereami'
+    puts '/' + Document.location.whereami
+
+  when 'whoami'
+    puts params[:user]
 
   else
     next

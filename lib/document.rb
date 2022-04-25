@@ -13,10 +13,6 @@ class Document
     save
   end
 
-  def parent_folder
-    @@disk.whereami
-  end
-
   def save
     @metadata = "Size: #{content.size} characters, Created at: #{Time.now}."
     document =  {
@@ -24,14 +20,22 @@ class Document
       metadata: metadata
     }
     @@disk.create_folder(filename, **document)
-    @@files_index.push([{"#{filename}": parent_folder}])
+    @@files_index.push([{ "#{filename}": parent_folder }])
+  end
+
+  def parent_folder
+    @@disk.whereami
   end
 
   def self.location
     @@disk
   end
-  
+
   def self.destroy(filename)
     @@disk.destroy(filename)
+  end
+
+  def self.greet
+    puts '> Welcome, if you are using --persisted option, quit with command quit or exit to save.'
   end
 end
