@@ -12,6 +12,7 @@ class VirtualDisk
   MESSAGES = {
     folder_created: '> Created /',
     file_deleted:   '> file deleted.'
+    random_folder:  '> A random name was chosen for you:'
   }
 
   GO_TO_UPPER_FOLDER = '..'
@@ -34,7 +35,7 @@ class VirtualDisk
   end
 
   def random_folder
-    puts '> A random name was chosen for you:'
+    puts MESSAGES[:random_folder]
     "folder#{rand 10000}"
   end
 
