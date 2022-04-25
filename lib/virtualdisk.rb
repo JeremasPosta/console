@@ -6,18 +6,18 @@ class VirtualDisk
 
   ERRORS = {
     unexisting_folder: '> Unexisting folder.',
-    bad_folder_name:   '> Folder name cannot contain dots(.) or slashes(/\\).'
+    bad_folder_name: '> Folder name cannot contain dots(.) or slashes(/\\).'
   }
 
   MESSAGES = {
     folder_created: '> Created /',
-    file_deleted:   '> file deleted.',
-    random_folder:  '> A random name was chosen for you:'
+    file_deleted: '> file deleted.',
+    random_folder: '> A random name was chosen for you:'
   }
 
   GO_TO_UPPER_FOLDER = '..'
   CONTENT = 'content'
-  DOTS_SLASH_FILTER = %r{(/+|\.+|\\+)}
+  DOTS_SLASH_FILTER = %r{(/+|\.+|\\+)}.freeze
 
   def initialize(disk = :drive, current_route = [])
     @disk = { disk => {} }
@@ -36,7 +36,7 @@ class VirtualDisk
 
   def random_folder
     puts MESSAGES[:random_folder]
-    "folder#{rand 10000}"
+    "folder#{rand 10_000}"
   end
 
   def listing
@@ -52,7 +52,7 @@ class VirtualDisk
     current_route.pop unless content&.empty?
   end
 
-  def remove_from(key)
+  def remove_from(_key)
     insert_in nil, current_route
     disk.compact!
   end
