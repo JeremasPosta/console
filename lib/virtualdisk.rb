@@ -94,10 +94,10 @@ class VirtualDisk
     disk.dig(*temp_current_route)
   end
 
-  def destroy(filename)
-    remove_from(filename.to_sym)
-    filename + MESSAGES[:file_deleted]
-  end
+  # def destroy(filename)
+  #   remove_from(filename.to_sym)
+  #   filename + MESSAGES[:file_deleted]
+  # end
 
   def dump(filename)
     File.write(filename.to_s, disk.to_json)
