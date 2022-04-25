@@ -16,11 +16,11 @@ module Ui
   def self.login
     User.start
     unless (@params[:user] || @params[:password])
-      puts '> You can create your user now, login, or provide your credentials when starting Console.rb next time.'
+      puts User::MESSAGES[:initial]
       signup
     end
     unless User.validate_password(@params[:user].to_sym, @params[:password])
-      puts '> Bad credentials, please reenter to Login or Signup.'
+      puts User::MESSAGES[:bad_credentials]
       signup
     end
   end

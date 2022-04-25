@@ -2,6 +2,10 @@ class User
   require 'digest'
   SALTY_HASHIE = 'fasdf4sd54g8974f45sd2fs8df4as651csd6v8sdc'
 
+  MESSAGES = {
+    initial: '> You can create your user now, login, or provide your credentials when starting Console.rb next time.',
+    bad_credentials: '> Bad credentials, please reenter to Login or Signup.'
+  }
   attr_accessor :name
 
   @@bault ||= VirtualDisk.new :bault
