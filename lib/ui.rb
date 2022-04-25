@@ -1,6 +1,3 @@
-require './lib/virtualdisk'
-require './lib/document'
-require './lib/user'
 require 'optparse'
 
 module Ui
