@@ -106,7 +106,9 @@ class VirtualDisk
   end
 
   def mount(filename, *args)
+    # byebug
     disk.merge!(JSON.parse(File.read(filename.to_s), symbolize_names: true).to_h)
+    # pp disk
   rescue Errno::ENOENT => e
     puts "> Failed to mount disk with error: #{e}" if args.empty?
     puts '> Trying to create resource...' if args.empty?
