@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User
   require 'digest'
   SALTY_HASHIE = 'fasdf4sd54g8974f45sd2fs8df4as651csd6v8sdc'

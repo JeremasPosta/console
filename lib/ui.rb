@@ -2,7 +2,6 @@ require './lib/virtualdisk'
 require './lib/document'
 require './lib/user'
 require 'optparse'
-require 'byebug'
 
 module Ui
   @params = {}
@@ -41,7 +40,7 @@ module Ui
     OptionParser.new do |parser|
       parser.on("-u = 'example'", '--user', 'Your username')
       parser.on("-k = 'example_pwd'", '--password', 'Your password')
-      parser.on("-p = 'fileName'", '--persisted', 'Your virtual disk filename, without extension')
+      parser.on("-p = 'fileName'", '--persisted', 'Your virtual disk filename if you want to persist data, without extension')
     end.parse!(into: @params)
     persisted?
   end
