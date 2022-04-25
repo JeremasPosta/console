@@ -35,7 +35,7 @@ module Ui
     OptionParser.new do |parser|
       parser.on("-u = 'example'", "--user", "Your username")
       parser.on("-k = 'example_pwd'", "--password", "Your password")
-      parser.on("-p = 'file'", "--persisted", "Your virtual disk filename, without extension")
+      parser.on("-p = 'fileName'", "--persisted", "Your virtual disk filename, without extension")
     end.parse!(into: @params)
     login
 

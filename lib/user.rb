@@ -17,7 +17,7 @@ class User
   end
 
   def self.validate_password(user, raw_password)
-    bault[user] == Digest::SHA1.hexdigest(raw_password + SALTY_HASHIE)
+    bault[user.to_sym] == Digest::SHA1.hexdigest(raw_password + SALTY_HASHIE)
   end
 
   def save

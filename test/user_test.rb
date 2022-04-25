@@ -12,9 +12,9 @@ class UserTest
       end
 
       it 'can check for valid password ' do
-        expect(subject.validate_password?('p4ssw0rd')).to be true
-        expect(subject.validate_password?('notMyPassword')).to be false
-        expect(subject.validate_password?('')).to be false
+        expect(subject.class.validate_password(subject.name, 'p4ssw0rd')).to be true
+        expect(subject.class.validate_password(subject.name, 'notMyPassword')).to be false
+        expect(subject.class.validate_password(subject.name, '')).to be false
       end
 
       it 'must be hard-saved' do
