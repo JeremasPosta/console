@@ -65,7 +65,7 @@ Other commands and its functions are:
 | `metadata filename` |  | Show the file's information |
 | \*`create_folder foldername` | `mkdir` | Create a new `foldername` folder |
 | `cd foldername` |  | Get into `foldername` if exists |
-| \*`destroy file`, `destroy folder` | | Delete the desired element |
+| `destroy file`, `destroy folder` | | Delete the desired element |
 | `ls` |  | List the files and folder in the current folder |
 | \*`mount diskname` |  | Read the information of a `diskname` file | 
 | \*`dump diskname` |  | Write the actual data into file | 
@@ -79,14 +79,12 @@ Other commands and its functions are:
  
 `create_folder` If no name is provided, it will generate one.
 
-`destroy` This is not currently working, Sorry! 😢
-
 `mount` The file will be created if unexistent.
 
 `dump` This can be done automatically on exit.
 
 ## Actual buggy behavior
 
-* Cannot destroy Files nor Folders.
+* ~~Cannot destroy Files nor Folders.~~
 * User password can be overwritten from inside console, but a bad password is detected from flags.
 * You can `cd` into a `file` and see its content.
