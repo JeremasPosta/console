@@ -6,32 +6,42 @@ module Ui
   def self.start
     console_init
     clear
+    User.start
     login
+    User.greet @params[:user].capitalize
     navigator
   end
 
   def self.login
-    User.start
-    unless (@params[:user] || @params[:password])
+    unless (@params[:user] && @params[:password])
       puts User::MESSAGES[:initial]
       signup
     end
     unless User.validate_password(@params[:user].to_sym, @params[:password])
       puts User::MESSAGES[:bad_credentials]
-      signup
+      signup :bad_credentials
     end
   end
 
-  def self.signup
+  def self.signup(flag = nil)
     print '>> Username: '
     @params[:user] = gets.chomp
 
     print '>> Password: '
     @params[:password] = gets.chomp
 
-    User.new @params[:user], @params[:password]
-    User.greet @params[:user].capitalize
+    if flag == :bad_credentials
+      if user_taken? && User.validate_password(@params[:user].to_sym, @params[:password]) == false
+        puts '> Password incorrect for this user. Retry to login or enter another name to signup.'
+      else
+        User.new @params[:user], @params[:password]
+      end
+    end
     login
+  end
+
+  def self.user_taken?
+    User.bault.key?(@params[:user].to_sym)
   end
 
   def self.console_init

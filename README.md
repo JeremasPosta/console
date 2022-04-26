@@ -35,16 +35,16 @@ Usage: console [options]
     -u, --user = 'example'           Your username
     -k, --password = 'example_pwd'   Your password
     -p, --persisted = 'fileName'     Your virtual disk filename if you want to persist data, without extension
-    
+
 Example $ruby .\console.rb  --persisted file -u jeremias -k ramirez
 ```
 Once started, you will be prompted to insert your credentials if you not provided during start. Also will be displayed if you provide bad credentials.
 
-Here, you can redefine your password indeed. (Not too secure, uh?) I need to fix it. 
+Here, you can redefine your password indeed. (Not too secure, uh?) I need to fix it.
 ```
 > You can create your user now, login, or provide your credentials when starting Console.rb next time.
 >> Username:
->> Password: 
+>> Password:
 ```
 Once logged, a prompt appear:
 ```
@@ -67,8 +67,8 @@ Other commands and its functions are:
 | `cd foldername` |  | Get into `foldername` if exists |
 | `destroy file`, `destroy folder` | | Delete the desired element |
 | `ls` |  | List the files and folder in the current folder |
-| \*`mount diskname` |  | Read the information of a `diskname` file | 
-| \*`dump diskname` |  | Write the actual data into file | 
+| \*`mount diskname` |  | Read the information of a `diskname` file |
+| \*`dump diskname` |  | Write the actual data into file |
 | `ruby` |  | Allow us to evaluate any other Ruby sentence |
 | `whoami` |  | Print the current user name |
 | `whereami` |  | Print the current path |
@@ -76,7 +76,7 @@ Other commands and its functions are:
 | Any other command |  | Nothing, just print a newline |
 
  #### Notes:
- 
+
 `create_folder` If no name is provided, it will generate one.
 
 `mount` The file will be created if unexistent.
@@ -86,5 +86,5 @@ Other commands and its functions are:
 ## Actual buggy behavior
 
 * ~~Cannot destroy Files nor Folders.~~
-* User password can be overwritten from inside console, but a bad password is detected from flags.
+* ~~User password can be overwritten from inside console, but a bad password is detected from flags.~~
 * You can `cd` into a `file` and see its content.
