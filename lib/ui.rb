@@ -5,6 +5,7 @@ module Ui
 
   def self.start
     console_init
+    clear
     login
     navigator
   end
@@ -55,6 +56,10 @@ module Ui
     [user_input.slice!(0)&.downcase, user_input]
   end
 
+  def self.clear
+    system('clear') || system('cls')
+  end
+
   def self.navigator
     loop do
       command, input = *prompt
@@ -73,7 +78,7 @@ module Ui
         puts content unless content.nil?
 
       when 'cls', 'clear'
-        system('clear') || system('cls')
+        clear
 
       when 'metadata'
         puts Document.location.gimme_a_file(input.first, 'metadata')

@@ -78,12 +78,38 @@ class VirtualDiskTest
 
     context 'on destroy' do
       it 'must delete folder' do
-        skip 'Skipped, reason: Need implementation'
         expect do
           subject.create_folder 'Borrame'
           expect(subject.whereami).to eq '~/Borrame'
+          subject.cd '..'
+          expect(subject.whereami).to eq '~'
           subject.destroy('Borrame')
         end.to_not change { subject.disk }
+        expect(subject.whereami).to eq '~'
+      end
+      
+      it 'should not delete unexistent folder' do
+        subject.create_folder 'noMeBorres'
+        expect(subject.whereami).to eq '~/noMeBorres'
+        subject.cd '..'
+        expect(subject.whereami).to eq '~'
+        subject.destroy('Borrame')
+        subject.cd 'noMeBorres'
+        expect(subject.whereami).to eq '~/noMeBorres'
+      end
+      
+      it 'must delete very nested folder' do
+        subject.create_folder 'noMeBorres'
+        subject.create_folder 'noMeBorres'
+        subject.create_folder 'noMeBorres'
+        expect do
+          subject.create_folder 'Borrame'
+          expect(subject.whereami).to eq '~/noMeBorres/noMeBorres/noMeBorres/Borrame'
+          subject.cd '..'
+          expect(subject.whereami).to eq '~/noMeBorres/noMeBorres/noMeBorres'
+          subject.destroy('Borrame')
+        end.to_not change { subject.disk }
+        expect(subject.whereami).to eq '~/noMeBorres/noMeBorres/noMeBorres'
       end
     end
   end

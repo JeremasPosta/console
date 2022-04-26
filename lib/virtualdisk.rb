@@ -44,23 +44,6 @@ class VirtualDisk
     disk.dig(*folders).keys.map(&:to_s).to_s[1...-1]
   end
 
-  def insert_in(content = {}, *folders)
-    folders[0...-1]
-      .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
-      .public_send(:[]=, folders.last, content)
-
-    current_route.pop unless content&.empty?
-  end
-
-  def remove_from(_key)
-    insert_in nil, current_route
-    disk.compact!
-  end
-
-  def add_folder_to(current, name)
-    current << name.to_sym
-  end
-
   def cd(folder)
     folder.to_s
     if folder == GO_TO_UPPER_FOLDER
@@ -94,10 +77,33 @@ class VirtualDisk
     disk.dig(*temp_current_route)
   end
 
-  # def destroy(filename)
-  #   remove_from(filename.to_sym)
-  #   filename + MESSAGES[:file_deleted]
-  # end
+  def destroy(filename)
+    add_folder_to current_route, filename
+    remove_from(disk.dup, filename.to_sym)
+    filename + MESSAGES[:file_deleted]
+    current_route.pop
+  end
+
+  def remove_from(temp_disk, key, level = 0)
+    level += 1
+    remove_from(temp_disk[current_route[level - 1]], key, level) unless level == current_route.size
+    if current_route.size == level
+      temp_disk.delete key
+    end
+    temp_disk
+  end
+
+  def insert_in(content = {}, *folders)
+    folders[0...-1]
+      .inject(disk) { |temp_disk, folder| temp_disk.public_send(:[], folder) }
+      .public_send(:[]=, folders.last, content)
+
+    current_route.pop unless content&.empty?
+  end
+
+  def add_folder_to(current, name)
+    current << name.to_sym
+  end
 
   def dump(filename)
     File.write(filename.to_s, disk.to_json)
