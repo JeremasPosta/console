@@ -91,8 +91,8 @@ module Ui
           Document.location.cd dir
         end
 
-      # when 'destroy'
-      #   puts Document.destroy input.first
+      when 'destroy'
+        puts Document.destroy input.first
 
       when 'ls'
         puts Document.location.listing

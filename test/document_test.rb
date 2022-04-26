@@ -68,7 +68,6 @@ class DocumentTest
 
     context 'on destroy' do
       it 'must delete document' do
-        skip 'Skipped, reason: Need implementation'
         expect do
           subject.class.new 'Borrame!', 'contenido'
           expect(subject.class.location.gimme_a_file('Borrame!')).to eq 'contenido'

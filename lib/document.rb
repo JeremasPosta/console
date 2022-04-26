@@ -32,7 +32,7 @@ class Document
     @@disk
   end
 
-  # def self.destroy(filename)
-  #   @@disk.destroy(filename)
-  # end
+  def self.destroy(filename)
+    @@disk.destroy(filename)
+  end
 end

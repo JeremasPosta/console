@@ -11,7 +11,7 @@ class VirtualDisk
 
   MESSAGES = {
     folder_created: '> Created /',
-    file_deleted: '> file deleted.',
+    file_deleted: ' deleted.',
     random_folder: '> A random name was chosen for you:'
   }
 
@@ -48,14 +48,14 @@ class VirtualDisk
     folder.to_s
     if folder == GO_TO_UPPER_FOLDER
       current_route.pop if current_route.size > 1
-    elsif folder_exist_in_this_level? folder
+    elsif folder_exist_in_this_at_level? folder
       add_folder_to current_route, folder
     else
       ERRORS[:unexisting_folder]
     end
   end
 
-  def folder_exist_in_this_level?(folder)
+  def folder_exist_in_this_at_level?(folder)
     temp_current_route = current_route.dup
     add_folder_to temp_current_route, folder
     disk.dig(*temp_current_route)
@@ -77,18 +77,19 @@ class VirtualDisk
     disk.dig(*temp_current_route)
   end
 
-  def destroy(filename)
-    add_folder_to current_route, filename
-    remove_from(disk.dup, filename.to_sym)
-    filename + MESSAGES[:file_deleted]
+  def destroy(element)
+    add_folder_to current_route, element
+    remove_from(disk, element.to_sym)
     current_route.pop
+    element + MESSAGES[:file_deleted]
   end
 
-  def remove_from(temp_disk, key, level = 0)
-    level += 1
-    remove_from(temp_disk[current_route[level - 1]], key, level) unless level == current_route.size
-    if current_route.size == level
-      temp_disk.delete key
+  def remove_from(temp_disk, this_element, at_level = 0)
+    at_level += 1
+    if current_route.size == at_level
+      temp_disk.delete this_element
+    else
+      remove_from(temp_disk[current_route[at_level - 1]], this_element, at_level)
     end
     temp_disk
   end

@@ -87,7 +87,7 @@ class VirtualDiskTest
         end.to_not change { subject.disk }
         expect(subject.whereami).to eq '~'
       end
-      
+
       it 'should not delete unexistent folder' do
         subject.create_folder 'noMeBorres'
         expect(subject.whereami).to eq '~/noMeBorres'
@@ -97,7 +97,7 @@ class VirtualDiskTest
         subject.cd 'noMeBorres'
         expect(subject.whereami).to eq '~/noMeBorres'
       end
-      
+
       it 'must delete very nested folder' do
         subject.create_folder 'noMeBorres'
         subject.create_folder 'noMeBorres'
