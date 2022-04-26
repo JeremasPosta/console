@@ -17,6 +17,10 @@ Works fine with `2.4.10`, `2.7.*`.
 
 Tested on Ubuntu and Windows.
 
+## Test
+
+Some tests was inluded. Run `test.rb` to start `Rspec` suite.
+
 ## Initialization
 We can start our Console typing:
 
