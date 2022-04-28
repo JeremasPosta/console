@@ -35,4 +35,8 @@ class Document
   def self.destroy(filename)
     @@disk.destroy(filename)
   end
+
+  def self.files_index
+    @@files_index
+  end
 end

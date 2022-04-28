@@ -56,24 +56,24 @@ Now you can work with the other commands.
 ## Commands
 Other commands and its functions are:
 
-| Command | Alias | Action |
-| ------- | ----- | ------ |
-| `exit` | `quit` | Close the Console and save changes if `--persisted` flag was provided|
-| `clear` | `cls` | Clear the Console |
-| `create_file filename "content" ` | `touch` | Create a new `filename` file with `content` |
-| `show filename` |  | Show the file's content |
-| `metadata filename` |  | Show the file's information |
-| \*`create_folder foldername` | `mkdir` | Create a new `foldername` folder |
-| `cd foldername` |  | Get into `foldername` if exists |
-| `destroy file`, `destroy folder` | | Delete the desired element |
-| `ls` |  | List the files and folder in the current folder |
-| \*`mount diskname` |  | Read the information of a `diskname` file |
-| \*`dump diskname` |  | Write the actual data into file |
-| `ruby` |  | Allow us to evaluate any other Ruby sentence |
-| `whoami` |  | Print the current user name |
-| `whereami` |  | Print the current path |
-| `seed` |  | Create some random files and folders |
-| Any other command |  | Nothing, just print a newline |
+| Command | Alias                               | Action |
+| ------- | -----                               | ------ |
+| `exit` | `quit`                               | Close the Console and save changes if `--persisted` flag was provided|
+| `clear` | `cls`                               | Clear the Console |
+| `create_file filename "content" ` | `touch`   | Create a new `filename` file with `content` |
+| `show filename` |                             | Show the file's content |
+| `metadata filename` |                         | Show the file's information |
+| \*`create_folder foldername` | `mkdir`        | Create a new `foldername` folder |
+| `cd foldername` |                             | Get into `foldername` if exists |
+| `destroy file`, `destroy folder` |            | Delete the desired element |
+| `ls` |                                        | List the files and folder in the current folder |
+| \*`mount diskname` |                          | Read the information of a `diskname` file |
+| \*`dump diskname` |                           | Write the actual data into file |
+| `ruby` |                                      | Allow us to evaluate any other Ruby sentence |
+| `whoami` |                                    | Print the current user name |
+| `whereami` |                                  | Print the current path |
+| `seed` |                                      | Create some random files and folders |
+| Any other command |                           | Nothing, just print a newline |
 
  #### Notes:
 

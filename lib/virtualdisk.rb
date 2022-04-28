@@ -48,14 +48,14 @@ class VirtualDisk
     folder.to_s
     if folder == GO_TO_UPPER_FOLDER
       current_route.pop if current_route.size > 1
-    elsif folder_exist_in_this_at_level? folder
+    elsif folder_exist_in_this_level? folder
       add_folder_to current_route, folder
     else
       ERRORS[:unexisting_folder]
     end
   end
 
-  def folder_exist_in_this_at_level?(folder)
+  def folder_exist_in_this_level?(folder)
     temp_current_route = current_route.dup
     add_folder_to temp_current_route, folder
     disk.dig(*temp_current_route)
